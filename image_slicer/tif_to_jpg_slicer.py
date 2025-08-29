@@ -386,8 +386,60 @@ class TifToJpgSlicer:
         logger.info(f"  Output directory: {self.output_dir}")
 
 
+def process_images(input_dir: str, output_dir: str, tile_size: Tuple[int, int] = (512, 512),
+                     overlap_ratio: float = 0.1, jpg_quality: int = 95, max_memory_mb: int = 2048,
+                     black_threshold: int = 30, black_area_ratio: float = 0.9):
+    """
+    Processes TIF images with specified parameters.
+
+    Args:
+        input_dir: Input directory for TIF images.
+        output_dir: Output directory for JPG images.
+        tile_size: Size of the sliced tiles (width, height).
+        overlap_ratio: Overlap ratio (0.0-1.0).
+        jpg_quality: JPG image quality (1-100).
+        max_memory_mb: Maximum memory usage (MB).
+        black_threshold: Brightness threshold for black pixels.
+        black_area_ratio: Threshold for the proportion of black area.
+    """
+    # Validate arguments
+    if not (0.0 <= overlap_ratio < 1.0):
+        logger.error("Overlap ratio must be between 0.0 and 1.0")
+        return
+    
+    if not (1 <= jpg_quality <= 100):
+        logger.error("JPG quality must be between 1 and 100")
+        return
+        
+    if tile_size[0] <= 0 or tile_size[1] <= 0:
+        logger.error("Tile dimensions must be greater than 0")
+        return
+        
+    if max_memory_mb <= 0:
+        logger.error("Maximum memory usage must be greater than 0")
+        return
+
+    slicer = TifToJpgSlicer(
+        input_dir=input_dir,
+        output_dir=output_dir,
+        tile_size=tile_size,
+        overlap_ratio=overlap_ratio,
+        jpg_quality=jpg_quality,
+        max_memory_mb=max_memory_mb,
+        black_threshold=black_threshold,
+        black_area_ratio=black_area_ratio
+    )
+    
+    try:
+        slicer.process_all_tifs()
+    except KeyboardInterrupt:
+        logger.info("Processing interrupted by user")
+    except Exception as e:
+        logger.error(f"An error occurred during processing: {str(e)}")
+
+
 def main():
-    """Main function"""
+    """Main function for command-line execution"""
     parser = argparse.ArgumentParser(description='TIF to JPG Conversion and Slicing Tool')
     parser.add_argument('--input-dir', '-i', type=str, default='tif_image',
                        help='Input directory for TIF images (default: tif_image)')
@@ -410,25 +462,7 @@ def main():
     
     args = parser.parse_args()
     
-    # Validate arguments
-    if not (0.0 <= args.overlap_ratio < 1.0):
-        logger.error("Overlap ratio must be between 0.0 and 1.0")
-        sys.exit(1)
-    
-    if not (1 <= args.jpg_quality <= 100):
-        logger.error("JPG quality must be between 1 and 100")
-        sys.exit(1)
-    
-    if args.tile_width <= 0 or args.tile_height <= 0:
-        logger.error("Tile dimensions must be greater than 0")
-        sys.exit(1)
-    
-    if args.max_memory <= 0:
-        logger.error("Maximum memory usage must be greater than 0")
-        sys.exit(1)
-    
-    # Create processor and execute
-    slicer = TifToJpgSlicer(
+    process_images(
         input_dir=args.input_dir,
         output_dir=args.output_dir,
         tile_size=(args.tile_width, args.tile_height),
@@ -438,14 +472,6 @@ def main():
         black_threshold=args.black_threshold,
         black_area_ratio=args.black_area_ratio
     )
-    
-    try:
-        slicer.process_all_tifs()
-    except KeyboardInterrupt:
-        logger.info("Processing interrupted by user")
-    except Exception as e:
-        logger.error(f"An error occurred during processing: {str(e)}")
-        sys.exit(1)
 
 
 if __name__ == '__main__':
