@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['stone']
+
+roboflow:
+  workspace: oncstone
+  project: onc_mapping_stone-8exzk
+  version: 11
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/oncstone/onc_mapping_stone-8exzk/dataset/11
