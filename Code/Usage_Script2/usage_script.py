@@ -666,13 +666,14 @@ def main():
 
     # ========== Configuration Parameters ==========
     # Model weights path
-    WEIGHTS_PATH = r'/Users/kyviii/MyProject/ONC-MAPPING/runs/train/ONCMAPPING/weights/best.pt'
+    # D:\ANU\ONCMAPPING\ONC-MAPPING\Code\train.py
+    WEIGHTS_PATH = r'D:/ANU/ONCMAPPING/ONC-MAPPING/runs/train/ONCMAPPING/weights/best.pt'
 
     # Input image path (can be single image or folder)
-    INPUT_IMAGE = r'/Users/kyviii/MyProject/ONC-MAPPING/Code/Usage_Script/img/Urambi_Plot2_Ortho_True_Ortho.tif'
+    INPUT_IMAGE = r'D:/ANU/ONCMAPPING/ONC-MAPPING/Code/Usage_Script/img/ACT2025_CIR_75mm_ortho__Urambi_Clip.tif'
 
     # Output directory
-    OUTPUT_DIR = r'/Users/kyviii/MyProject/ONC-MAPPING/Code/Usage_Script2/results'
+    OUTPUT_DIR = r'D:/ANU/ONCMAPPING/ONC-MAPPING/Code/Usage_Script2/results'
 
     # Detection parameters
     TILE_SIZE = (512, 512)      # Tile size
@@ -681,7 +682,7 @@ def main():
     IOU_THRESHOLD = 0.7         # NMS IoU threshold for merging (higher = less aggressive, 0.5-0.9 recommended)
     DEVICE = 'cpu'              # Inference device ('cpu' or '0', '1', '2', '3' for GPU)
     SAVE_VISUALIZATION = True   # Whether to save visualization results
-    SAVE_TILE_RESULTS = True    # Whether to save individual tile detection results
+    SAVE_TILE_RESULTS = False    # Whether to save individual tile detection results
     # ============================================
 
     # Create detection pipeline instance

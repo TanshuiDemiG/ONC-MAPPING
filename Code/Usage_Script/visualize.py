@@ -16,11 +16,28 @@ def visualize_predictions(image_path, weights_path, output_dir=None, conf=0.25):
         output_dir: 输出目录
         conf: 置信度阈值
     """
+    # 路径与文件存在性检查
+    image_path = str(Path(image_path).expanduser())
+    weights_path = str(Path(weights_path).expanduser())
+    if not Path(image_path).exists():
+        print(f"图像文件不存在，请检查路径: {Path(image_path).resolve()}")
+        return None
+    if not Path(weights_path).exists():
+        print(f"模型权重不存在，请检查路径: {Path(weights_path).resolve()}")
+        return None
+
     # 加载模型
     model = YOLO(weights_path)
     
     # 读取图像
-    image = cv2.imread(image_path)
+    try:
+        image = cv2.imread(image_path)
+        if image is None:
+            print(f"无法读取图像文件，请检查格式或权限: {Path(image_path).resolve()}")
+            return None
+    except Exception as e:
+        print(f"读取图像时发生错误: {e}")
+        return None
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     
     # 进行预测
@@ -104,13 +121,20 @@ def batch_analyze(image_folder, weights_path, output_dir, conf=0.25):
     model = YOLO(weights_path)
     
     # 获取所有图像文件
-    image_folder = Path(image_folder)
+    image_folder = Path(image_folder).expanduser()
+    if not image_folder.exists():
+        print(f"图像文件夹不存在，请检查路径: {image_folder.resolve()}")
+        return
     image_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.tif']
     image_files = []
     
     for ext in image_extensions:
         image_files.extend(list(image_folder.glob(f'*{ext}')))
         image_files.extend(list(image_folder.glob(f'*{ext.upper()}')))
+    
+    if len(image_files) == 0:
+        print(f"在文件夹中未找到图像文件: {image_folder.resolve()} (支持扩展名: {image_extensions})")
+        return
     
     print(f"找到 {len(image_files)} 张图像")
     
@@ -243,13 +267,13 @@ def main():
     
     if args.mode == 'single':
         if not args.image:
-            print("单张图像模式需要指定 --image 参数")
+            print("单张图像模式需要指定 --image 参数\n示例: python visualize.py --mode single --image D:/ANU/ONCMAPPING/Urambi2025/ACT2025_RGB_75mm_ortho__Urambi_Clip.tif")
             return
         visualize_predictions(args.image, args.weights, args.output, args.conf)
     
     elif args.mode == 'batch':
         if not args.folder:
-            print("批量分析模式需要指定 --folder 参数")
+            print("批量分析模式需要指定 --folder 参数\n示例: python visualize.py --mode batch --folder D:/ANU/ONCMAPPING/Urambi2025/")
             return
         batch_analyze(args.folder, args.weights, args.output, args.conf)
 

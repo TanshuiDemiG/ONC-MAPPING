@@ -50,6 +50,10 @@ python predict.py --weights ../runs/train/ONCMAPPING/weights/best.pt --source te
 ```bash
 python visualize.py --mode single --image path/to/image.jpg
 ```
+```bash
+python visualize.py --mode single --image D:/ANU/ONCMAPPING/ONC-MAPPING/Code/Usage_Script/img/trial1.jpg
+```
+
 
 #### 批量分析
 ```bash
@@ -96,3 +100,5 @@ pip install ultralytics opencv-python matplotlib numpy pathlib
 2. 如果有GPU，可以将 `device='cpu'` 改为 `device=0` 以使用GPU加速
 3. 根据实际需求调整置信度阈值
 4. 大批量处理时建议使用GPU以提高速度
+
+
