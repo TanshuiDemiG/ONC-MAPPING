@@ -1,0 +1,10 @@
+inference-sdk
+rasterio
+Pillow
+numpy
+geopandas
+shapely
+pyproj
+pyogrio
+PySide6
+pyinstaller
