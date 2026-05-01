@@ -1,4 +1,5 @@
 inference-sdk
+ultralytics
 rasterio
 Pillow
 numpy

@@ -48,6 +48,33 @@ def write_config(config: PipelineConfig, config_path: Path) -> None:
     )
 
 
+def _format_run_summary(
+    run_dir: Path,
+    detection_result: DetectionResult | None,
+    habitat_result: HabitatResult | None,
+) -> str:
+    lines = ["Run summary:", f"  - Output folder: {run_dir}"]
+    if detection_result:
+        lines.append(f"  - Rocks detected: {detection_result.final_detection_count}")
+        if detection_result.size_bin_counts:
+            lines.append("  - Rocks by size bin:")
+            lines.extend(
+                f"      {label}: {count}"
+                for label, count in detection_result.size_bin_counts.items()
+            )
+    if habitat_result:
+        lines.extend(
+            [
+                f"  - Habitat grid cells: {habitat_result.cell_total}",
+                f"  - Blocked by canopy: {habitat_result.blocked_total}",
+                f"  - Non-zero habitat score: {habitat_result.scored_total}",
+                f"  - Habitat zone polygons: {habitat_result.zone_total}",
+                f"  - Habitat zone file: {habitat_result.output_zones}",
+            ]
+        )
+    return "\n".join(lines)
+
+
 def run_pipeline(
     config: PipelineConfig,
     log: LogCallback | None = None,
@@ -64,7 +91,8 @@ def run_pipeline(
     if config.run_habitat:
         config.habitat.output_rgb = run_dir / "ptwl_habitat_rgb.tif"
         config.habitat.output_score = run_dir / "ptwl_habitat_score.tif"
-        config.habitat.output_grid = run_dir / "ptwl_habitat_grid.shp" if config.habitat.output_grid else None
+        config.habitat.output_grid = None
+        config.habitat.output_zones = run_dir / "ptwl_habitat_zones.shp"
 
     write_config(config, config_path)
     logger(f"Run directory: {run_dir}")
@@ -80,7 +108,15 @@ def run_pipeline(
             progress=detection_progress,
             cancel_event=cancel_event,
         )
-        config.habitat.rocks = detection_result.output_shp
+        if config.detection.habitat_size_bin:
+            selected_rocks = detection_result.size_bin_output_by_label.get(config.detection.habitat_size_bin)
+            if selected_rocks is None:
+                raise SystemExit(f"Selected habitat rock size bin was not written: {config.detection.habitat_size_bin}")
+            config.habitat.rocks = selected_rocks
+            logger(f"Using rock size bin for habitat map: {config.detection.habitat_size_bin} ({selected_rocks})")
+        else:
+            config.habitat.rocks = detection_result.output_shp
+            logger(f"Using all detected rocks for habitat map: {detection_result.output_shp}")
     else:
         logger("Skipping rock detection.")
 
@@ -94,5 +130,6 @@ def run_pipeline(
     else:
         logger("Skipping habitat map generation.")
 
+    logger(_format_run_summary(run_dir, detection_result, habitat_result))
     logger("Pipeline finished.")
     return PipelineResult(run_dir, detection_result, habitat_result, config_path, log_path)

@@ -4,7 +4,7 @@
 from PyInstaller.utils.hooks import collect_all
 
 
-datas = []
+datas = [("src/model/best.pt", "model")]
 binaries = []
 hiddenimports = []
 
@@ -18,6 +18,8 @@ for package in (
     "pyogrio",
     "PIL",
     "inference_sdk",
+    "ultralytics",
+    "torch",
 ):
     try:
         package_datas, package_binaries, package_hiddenimports = collect_all(package)
