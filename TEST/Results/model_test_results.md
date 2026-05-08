@@ -16,4 +16,4 @@ Yuvraj models
 
 | models | detected rocks num | Evaluation |
 | --- | ---: | --- |
-| model_YOLO26_size_N_augment_FALSE_best_001.pt | 183 | Poor performance |
+| model_yuvraj_best_001.pt | 183 | Poor performance |
