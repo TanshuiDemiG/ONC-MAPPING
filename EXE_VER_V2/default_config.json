@@ -1,0 +1,8 @@
+{
+  "run_detection": true,
+  "run_habitat": true,
+  "detection": {
+    "inference_backend": "local_yolo",
+    "local_model_source": "pt_file"
+  }
+}

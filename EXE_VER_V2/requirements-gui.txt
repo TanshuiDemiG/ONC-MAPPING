@@ -1,0 +1,12 @@
+inference-sdk
+ultralytics
+onnxruntime
+rasterio
+Pillow
+numpy
+geopandas
+shapely
+pyproj
+pyogrio
+PySide6
+pyinstaller
