@@ -46,10 +46,16 @@ OUT_DIR = f'{DRIVE_ROOT}/OUT'
 建议准备的数据如下：
 
 - `ORIGINAL_IMG`：待检测的正射影像，支持 `.tif`、`.tiff`、`.img`、`.jp2`、`.vrt`
-- `CANOPY_IMAGE`：canopy 面数据，当前脚本要求为 `.shp`
-- `VEGE_MAP`：植被图栅格，支持 `.tif`、`.tiff`、`.img`、`.jp2`、`.vrt`
+- `CANOPY_IMAGE`：canopy 面数据，当前脚本要求为 `.shp`；仅 `full` 和 `habitat_only` 必需
+- `VEGE_MAP`：植被图栅格，支持 `.tif`、`.tiff`、`.img`、`.jp2`、`.vrt`；仅 `full` 和 `habitat_only` 必需
 - `Model_Weights`：检测模型，支持 `.pt` 或 `.onnx`
 - `OUT`：输出目录，脚本会自动创建每次运行的子目录
+
+补充说明：
+
+- 脚本启动时会检查 `DRIVE_ROOT` 下是否存在 `ORIGINAL_IMG` 和 `VEGE_MAP`
+- 如果这两个目录缺失，会自动创建空目录
+- 仅自动建目录，不会自动放入数据文件；目录为空时，后续仍会提示找不到支持格式的输入文件
 
 ## 3. Notebook 运行步骤
 
@@ -82,6 +88,8 @@ OUT_DIR = f'{DRIVE_ROOT}/OUT'
 
 - `ORTHO` 是批处理入口，可能一次处理多张影像
 - `CANOPY`、`VEG`、`MODEL_PATH` 在当前 notebook 中是全局共享的
+- `CANOPY` 和 `VEG` 只会在 `RUN_MODE` 为 `full` 或 `habitat_only` 时被检查
+- `ORIGINAL_IMG` 和 `VEGE_MAP` 若目录不存在，会先自动创建再继续执行
 - 如果目录下有多个候选文件，脚本会按路径排序后选择第一个
 
 ## 5. 运行模式
@@ -107,6 +115,17 @@ OUT_DIR = f'{DRIVE_ROOT}/OUT'
 
 - 先单独检查检测质量
 - 只需要石块分布，不需要评分
+- 没有准备 `VEG` 或 `CANOPY`，但希望先跑检测
+
+该模式下必须有：
+
+- `ORTHO`
+- `MODEL_PATH`
+
+该模式下可以缺失：
+
+- `VEG`
+- `CANOPY`
 
 ### 5.3 `habitat_only`
 
@@ -123,6 +142,12 @@ EXISTING_ROCKS = '已有 rocks.shp 的路径'
 
 - 已经有历史检测结果
 - 希望重复调整评分参数而不重新跑检测
+
+该模式下必须有：
+
+- `VEG`
+- `CANOPY`
+- `EXISTING_ROCKS`
 
 ## 6. 模型配置
 
@@ -388,6 +413,8 @@ RUN_MODE = 'detection_only'
 - `rocks.shp`
 - 是否存在明显漏检或误检
 - size bins 是否合理
+
+在这个模式下，如果暂时没有植被图或 canopy 文件，也可以直接运行。
 
 ### 场景 C：固定石块结果，反复调评分
 

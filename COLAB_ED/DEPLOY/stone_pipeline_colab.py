@@ -1763,17 +1763,39 @@ def resolve_path(root: str, value: str) -> str:
     return value if os.path.isabs(value) else os.path.join(root, value)
 
 
+def ensure_expected_input_dirs(root: str | Path, folder_names: list[str] | tuple[str, ...] = ("VEGE_MAP", "ORIGINAL_IMG")) -> None:
+    root_path = Path(root)
+    root_path.mkdir(parents=True, exist_ok=True)
+    for folder_name in folder_names:
+        target = root_path / folder_name
+        if target.exists():
+            log(f"Input folder ready: {target}")
+            continue
+        target.mkdir(parents=True, exist_ok=True)
+        log(f"Created missing input folder: {target}")
+
+
 def main() -> None:
     args = parse_args()
     if args.mount_drive:
         mount_drive()
     if args.install_deps:
         maybe_install_deps()
+    ensure_expected_input_dirs(args.drive_root)
     effective_max_tiles = 1 if args.smoke_test and args.max_tiles is None else args.max_tiles
     ortho_paths = resolve_input_paths(resolve_path(args.drive_root, args.ortho), [".tif", ".tiff", ".img", ".jp2", ".vrt"], "ORTHO")
-    canopy_path = resolve_input_path(resolve_path(args.drive_root, args.canopy), [".shp"], "CANOPY")
-    veg_path = resolve_input_path(resolve_path(args.drive_root, args.veg), [".tif", ".tiff", ".img", ".jp2", ".vrt"], "VEG")
     weights_path = resolve_input_path(resolve_path(args.drive_root, args.weights), [".pt", ".onnx"], "WEIGHTS")
+    needs_habitat_inputs = args.run_mode in {"full", "habitat_only"}
+    canopy_path = (
+        resolve_input_path(resolve_path(args.drive_root, args.canopy), [".shp"], "CANOPY")
+        if needs_habitat_inputs
+        else ""
+    )
+    veg_path = (
+        resolve_input_path(resolve_path(args.drive_root, args.veg), [".tif", ".tiff", ".img", ".jp2", ".vrt"], "VEG")
+        if needs_habitat_inputs
+        else ""
+    )
     existing_rocks = resolve_path(args.drive_root, args.existing_rocks) if args.existing_rocks else ""
     out_dir = resolve_path(args.drive_root, args.out_dir)
     all_outputs: list[str] = []
