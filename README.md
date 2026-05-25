@@ -1,4 +1,3 @@
-
 # ONC-MAPPING
 
 [![Project Page](https://img.shields.io/badge/Project-ONC--MAPPING-blue)](https://github.com/TanshuiDemiG/ONC-MAPPING)
@@ -89,48 +88,17 @@ Initial public Google Colab deployment pipeline for the ONC-MAPPING workflow.
 * Google Colab deployment notebook
 * End-to-end segmentation and mapping execution pipeline
 * Organized model weight directory structure
+* Video and Document User_Guide
 
-### Changed
+### How to use
 
-* Standardized model weight paths
-
-Example:
-
-```text
-
-Model_Weights/best_DY.pt
-
-```
-
-### Known Issues
-
-If both a branch and tag share the same name:
-
-```bash
-
-gitpushoriginrelease-colab-0.1
-
-```
-
-may fail because of ambiguous references.
-
-Use explicit refs instead:
-
-```bash
-
-gitpushoriginrefs/heads/release-colab-0.1
-
-```
-
-or
-
-```bash
-
-gitpushoriginrefs/tags/release-colab-0.1
-
-```
+- download from [Colab Version Release](https://github.com/TanshuiDemiG/ONC-MAPPING/releases/tag/release-colab-0.1)
+- follow the User_Guide for deployment and execution.
+- the video guide is in the zipped file
 
 ---
+
+
 
 ## release-exe-ver-0.1
 
