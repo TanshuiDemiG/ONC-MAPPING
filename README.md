@@ -10,7 +10,7 @@
 
 [![License](https://img.shields.io/badge/License-MIT-lightgrey)](https://chatgpt.com/c/6a114fe4-2424-83ec-885c-2682cb0737b5#license)
 
-> This software project accompanies the ONC-MAPPING workflow for stone segmentation, mapping visualization, and route analysis research.\n\n> Developed as part of an Australian National University (ANU) postgraduate internship collaboration project with the Australian Government, the project aims to reduce manual natural exploration and surveying workloads through machine learning analysis of drone imagery and vegetation overlay analysis.
+> This software project accompanies the ONC-MAPPING workflow for stone segmentation, mapping visualization, and route analysis research. Developed as part of an Australian National University (ANU) postgraduate internship collaboration project with the Australian Government, the project aims to reduce manual natural exploration and surveying workloads through machine learning analysis of drone imagery and vegetation overlay analysis.
 
 ---
 
@@ -41,7 +41,7 @@ The project aims to reduce deployment complexity while maintaining a modular and
 
 # Features
 
-## Google Colab Deployment
+#### Google Colab Deployment
 
 * End-to-end runnable notebook workflow
 * Cloud-based execution with minimal setup
@@ -58,7 +58,7 @@ COLAB_ED/DEPLOY/stone_pipeline_colab.ipynb
 
 ---
 
-## Standalone EXE Version
+#### Standalone EXE Version
 
 * Windows executable deployment
 * No Python environment required for end users
@@ -98,8 +98,6 @@ Initial public Google Colab deployment pipeline for the ONC-MAPPING workflow.
 
 ---
 
-
-
 ## release-exe-ver-0.1
 
 ### Overview
@@ -127,31 +125,15 @@ ONC_PTWL_Tool_Standalone
 
 ### Step 1
 
-Open:
+1. Upload the whole deploy folder into your google drive;
+2. run stone_pipeline_colab.ipynb in Google Colab.
+3. try the roboflow option first
 
 ```text
 
 COLAB_ED/DEPLOY/stone_pipeline_colab.ipynb
 
 ```
-
-in Google Colab.
-
-### Step 2
-
-Ensure model weights are placed correctly:
-
-```text
-
-Model_Weights/best_DY.pt
-
-```
-
-### Step 3
-
-Run notebook cells sequentially.
-
----
 
 ## Option 2 — EXE Version
 
@@ -201,13 +183,13 @@ ONC-MAPPING/
 Designed primarily for:
 
 * Google Colab
-* CUDA-enabled cloud runtime environments
+* cpu cloud runtime environments
 
 Local execution may require:
 
 * Dependency installation
 * Path adjustments
-* CUDA configuration
+* CUDA & CPU configuration
 
 ---
 
@@ -218,19 +200,6 @@ Designed primarily for:
 * Windows systems
 
 Additional dependencies may still be required for GPU acceleration.
-
----
-
-# Future Development
-
-Planned improvements include:
-
-* Improved stone/hold detection accuracy
-* Route recommendation functionality
-* Enhanced GUI system
-* Real-time video processing
-* Better local deployment support
-* Additional model architecture integration
 
 ---
 
@@ -267,11 +236,3 @@ If you use this project in your research or development, please consider citing 
 # License
 
 Please refer to the repository license information for usage details.
-
----
-
-# Author
-
-GitHub:
-
-[https://github.com/TanshuiDemiG](https://github.com/TanshuiDemiG)
