@@ -23,9 +23,6 @@ Packaged end-user software should be downloaded from the GitHub Releases page, n
 - [Windows EXE Workflow](#windows-exe-workflow)
 - [Development Notes](#development-notes)
 - [Documentation](#documentation)
-- [Contributing](#contributing)
-- [Citation](#citation)
-- [License](#license)
 
 ## Overview
 
