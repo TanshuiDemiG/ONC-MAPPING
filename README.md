@@ -1,238 +1,272 @@
 # ONC-MAPPING
 
-[![Project Page](https://img.shields.io/badge/Project-ONC--MAPPING-blue)](https://github.com/TanshuiDemiG/ONC-MAPPING)
+[![Releases](https://img.shields.io/badge/Releases-GitHub-green)](https://github.com/TanshuiDemiG/ONC-MAPPING/releases)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
+[![Platform](https://img.shields.io/badge/Platform-Colab%20%7C%20Windows-lightgrey)](https://github.com/TanshuiDemiG/ONC-MAPPING)
 
-[![GitHub Releases](https://img.shields.io/badge/Releases-Latest-green)](https://github.com/TanshuiDemiG/ONC-MAPPING/releases)
+ONC-MAPPING is a computer vision workflow for rock detection, habitat scoring, and mapping outputs from orthomosaic and vegetation data. The repository contains two active delivery tracks:
 
-[![Colab](https://img.shields.io/badge/Google-Colab-orange)](https://colab.research.google.com/)
+- `COLAB_ED`: Google Colab deployment for notebook-based execution.
+- `EXE_VER_V2`: source and build assets for the Windows standalone GUI workflow.
 
-[![Python](https://img.shields.io/badge/Python-3.10+-yellow)](https://www.python.org/)
+Packaged end-user software should be downloaded from the GitHub Releases page, not from the source folders in this repository:
 
-[![License](https://img.shields.io/badge/License-MIT-lightgrey)](https://chatgpt.com/c/6a114fe4-2424-83ec-885c-2682cb0737b5#license)
+- Releases: https://github.com/TanshuiDemiG/ONC-MAPPING/releases
 
-> This software project accompanies the ONC-MAPPING workflow for stone segmentation, mapping visualization, and route analysis research. Developed as part of an Australian National University (ANU) postgraduate internship collaboration project with the Australian Government, the project aims to reduce manual natural exploration and surveying workloads through machine learning analysis of drone imagery and vegetation overlay analysis.
+## Table of Contents
 
----
+- [Overview](#overview)
+- [Repository Scope](#repository-scope)
+- [Download and Releases](#download-and-releases)
+- [Repository Structure](#repository-structure)
+- [Google Colab Workflow](#google-colab-workflow)
+- [Windows EXE Workflow](#windows-exe-workflow)
+- [Development Notes](#development-notes)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [Citation](#citation)
+- [License](#license)
 
-# Project Overview
+## Overview
 
-ONC-MAPPING is a lightweight computer-vision workflow designed for:
+This project supports a workflow for:
 
-* Stone / hold segmentation
-* Spatial mapping visualization
-* Route analysis workflows
-* Google Colab deployment
-* Standalone executable usage
+- rock detection from orthomosaic imagery
+- habitat scoring using vegetation and rock layers
+- spatial output generation for mapping and review
+- Google Colab deployment for cloud-based runs
+- Windows GUI packaging for local demonstrations and operational use
 
-The project aims to reduce deployment complexity while maintaining a modular and extensible pipeline for future development and research.
+The repository is organized to separate active delivery paths from archived historical material.
 
----
+## Repository Scope
 
-# Repository
+This repository is primarily for:
 
-* GitHub Repository
+- source code
+- notebook workflows
+- model assets used by the workflows
+- build configuration
+- project documentation
 
-  [https://github.com/TanshuiDemiG/ONC-MAPPING](https://github.com/TanshuiDemiG/ONC-MAPPING)
-* Releases Page
+This repository is not the recommended distribution point for end users who only need the runnable software package. For packaged downloads, use GitHub Releases.
 
-  [https://github.com/TanshuiDemiG/ONC-MAPPING/releases](https://github.com/TanshuiDemiG/ONC-MAPPING/releases)
+## Download and Releases
 
----
+### For end users
 
-# Features
+Use the Releases page to download packaged software and release bundles:
 
-#### Google Colab Deployment
+- GitHub Releases: https://github.com/TanshuiDemiG/ONC-MAPPING/releases
 
-* End-to-end runnable notebook workflow
-* Cloud-based execution with minimal setup
-* Preconfigured inference pipeline
-* Simplified model weight management
+Typical use:
 
-Main notebook:
+1. Open the Releases page.
+2. Download the relevant release asset for your workflow.
+3. Extract the archive.
+4. Follow the included guide or release notes.
 
-```text
+### What should be downloaded from Releases
 
-COLAB_ED/DEPLOY/stone_pipeline_colab.ipynb
+- Windows standalone application packages
+- release snapshots prepared for users
+- zipped delivery bundles referenced by project release notes
 
-```
+### What should be used from this repository directly
 
----
+- source code under `EXE_VER_V2`
+- the Colab notebook under `COLAB_ED/DEPLOY`
+- project documentation under `DOC`
 
-#### Standalone EXE Version
+## Repository Structure
 
-* Windows executable deployment
-* No Python environment required for end users
-* GUI-oriented workflow
-* Designed for quick demonstrations and usability testing
-
-Release branch/tag:
-
-```text
-
-release-exe-ver-0.1
-
-```
-
----
-
-# Releases
-
-## release-colab-0.1 (v0.1)
-
-### Overview
-
-Initial public Google Colab deployment pipeline for the ONC-MAPPING workflow.
-
-### Added
-
-* Google Colab deployment notebook
-* End-to-end segmentation and mapping execution pipeline
-* Organized model weight directory structure
-* Video and Document User_Guide
-
-### How to use
-
-- download from [Colab Version Release](https://github.com/TanshuiDemiG/ONC-MAPPING/releases/tag/release-colab-0.1)
-- follow the User_Guide for deployment and execution.
-- the video guide is in the zipped file
-
----
-
-## release-exe-ver-0.1
-
-### Overview
-
-Initial standalone executable release for:
+Current top-level structure:
 
 ```text
-
-ONC_PTWL_Tool_Standalone
-
-```
-
-### Features
-
-* Packaged executable deployment
-* Simplified usage workflow
-* Reduced environment configuration requirements
-* Intended for quick local demonstrations and testing
-
----
-
-# Getting Started
-
-## Option 1 — Google Colab
-
-### Step 1
-
-1. Upload the whole deploy folder into your google drive;
-2. run stone_pipeline_colab.ipynb in Google Colab.
-3. try the roboflow option first
-
-```text
-
-COLAB_ED/DEPLOY/stone_pipeline_colab.ipynb
-
-```
-
-## Option 2 — EXE Version
-
-1. Download the executable release from the Releases page
-2. Extract the package
-3. Launch the executable application
-4. Follow the interface instructions
-
----
-
-# Repository Structure
-
-```text
-
 ONC-MAPPING/
-
-│
-
 ├── COLAB_ED/
-
 │   └── DEPLOY/
-
-│       └── stone_pipeline_colab.ipynb
-
-│
-
-├── Model_Weights/
-
-│   └── best_DY.pt
-
-│
-
-├── ONC_PTWL_Tool_Standalone/
-
-│
-
+│       ├── stone_pipeline_colab.ipynb
+│       ├── stone_pipeline_colab.py
+│       ├── User_Guide.md
+│       └── Model_Weights/
+├── EXE_VER_V2/
+│   ├── gui_app.py
+│   ├── pipeline.py
+│   ├── pipeline_config.py
+│   ├── habitat_runner.py
+│   ├── detection_runner.py
+│   ├── default_config.json
+│   ├── build_exe.spec
+│   ├── build_exe_clean.ps1
+│   └── model/
+├── DOC/
+│   ├── Poster/
+│   └── USR_Story/
+├── _archive/
+│   ├── Code/
+│   ├── DRAFTS/
+│   ├── EXE_VER/
+│   └── TEST/
 └── README.md
-
 ```
 
----
+### Active folders
 
-# Compatibility
+- `COLAB_ED/DEPLOY`: active Colab notebook workflow, guide, and Colab-side model assets
+- `EXE_VER_V2`: active Windows GUI source tree and packaging-related files
+- `DOC`: supporting documents, poster files, and user-story material
 
-## Colab Version
+### Archived folders
 
-Designed primarily for:
+- `_archive`: retained historical material that is no longer part of the primary active structure
 
-* Google Colab
-* cpu cloud runtime environments
+## Google Colab Workflow
 
-Local execution may require:
+Primary entry point:
 
-* Dependency installation
-* Path adjustments
-* CUDA & CPU configuration
+- `COLAB_ED/DEPLOY/stone_pipeline_colab.ipynb`
 
----
+Supporting files:
 
-## EXE Version
+- `COLAB_ED/DEPLOY/stone_pipeline_colab.py`
+- `COLAB_ED/DEPLOY/User_Guide.md`
+- `COLAB_ED/DEPLOY/Model_Weights/`
 
-Designed primarily for:
+### Intended usage
 
-* Windows systems
+The Colab workflow is designed for running the pipeline in Google Colab with the deployment folder uploaded to Google Drive.
 
-Additional dependencies may still be required for GPU acceleration.
+Recommended usage pattern:
 
----
+1. Upload the entire `COLAB_ED/DEPLOY` folder contents to Google Drive.
+2. Open `stone_pipeline_colab.ipynb` in Google Colab.
+3. Configure input paths and model selection.
+4. Run the workflow in the required mode.
 
-# Contributing
+### Main Colab run modes
 
-Contributions, issues, and feature suggestions are welcome.
+- `full`: run detection and habitat scoring
+- `detection_only`: generate rock detections only
+- `habitat_only`: skip detection and score from an existing rock shapefile
 
-Please use the GitHub Issues page for bug reports and enhancement requests.
+### Typical Colab inputs
 
----
+- orthomosaic imagery
+- canopy shapefile data
+- vegetation raster data
+- local model weights or configured remote model access
 
-# Citation
+For detailed parameter descriptions, see:
 
-If you use this project in your research or development, please consider citing the repository.
+- [COLAB_ED/DEPLOY/User_Guide.md](COLAB_ED/DEPLOY/User_Guide.md)
+
+## Windows EXE Workflow
+
+Primary source folder:
+
+- `EXE_VER_V2`
+
+This folder contains the maintained source tree for the standalone Windows workflow, including:
+
+- GUI entry points
+- detection and habitat pipeline modules
+- default runtime configuration
+- packaging specification and build helper scripts
+- local model folder structure used by the packaged app
+
+### Important distribution note
+
+If you only need the runnable Windows software, download it from GitHub Releases instead of using the source tree directly.
+
+### Main files in `EXE_VER_V2`
+
+- `gui_app.py`: GUI application entry point
+- `pipeline.py`: pipeline orchestration
+- `pipeline_config.py`: runtime configuration schema and defaults
+- `detection_runner.py`: detection workflow logic
+- `habitat_runner.py`: habitat workflow logic
+- `default_config.json`: default runtime toggles
+- `build_exe.spec`: PyInstaller specification
+- `build_exe_clean.ps1`: Windows build helper script
+
+### Runtime model layout
+
+The EXE workflow expects model assets in a runtime-accessible `models/` layout. A representative source layout is:
+
+```text
+EXE_VER_V2/model/
+├── rfdetr_large_onnx/
+│   ├── class_names.txt
+│   ├── environment.json
+│   └── model_type.json
+└── yolo_pt/
+    ├── best.pt
+    └── additional model variants
+```
+
+Additional model variants may also exist in the source tree for maintenance or testing, but packaged end-user delivery should follow the release bundle contents.
+
+### Build and maintenance
+
+`EXE_VER_V2` is primarily a maintenance and packaging folder for developers working on the Windows version. End users should prefer release assets.
+
+For source-specific packaging details, see:
+
+- [EXE_VER_V2/README.md](EXE_VER_V2/README.md)
+
+## Development Notes
+
+### Recommended usage split
+
+- End users: download packaged assets from Releases
+- Colab users: work from `COLAB_ED/DEPLOY`
+- Windows build or source maintenance: work from `EXE_VER_V2`
+
+### Archive policy
+
+Historical or superseded material has been moved under `_archive/` to keep the active project structure focused on current delivery paths.
+
+### Repository hygiene
+
+Python cache files are excluded from version control through `.gitignore`, and the active tree has been reduced to the current working structure plus explicit archive content.
+
+## Documentation
+
+Project documentation is stored in `DOC/`, including:
+
+- poster files
+- user story documents
+- supporting research/project notes
+
+Additional workflow-specific documentation is stored beside the relevant implementation:
+
+- Colab guide in `COLAB_ED/DEPLOY/User_Guide.md`
+- EXE packaging notes in `EXE_VER_V2/README.md`
+
+## Contributing
+
+Contributions, issue reports, and documentation improvements are welcome.
+
+Recommended contribution flow:
+
+1. Open an issue describing the bug, requirement, or proposed change.
+2. Keep changes scoped to the active folders unless the update is explicitly archival.
+3. Submit a pull request with a clear summary of behavioral or structural changes.
+
+## Citation
+
+If you use this repository in research or operational documentation, cite the project repository:
 
 ```bibtex
-
 @software{onc_mapping,
-
   author = {TanshuiDemiG},
-
   title = {ONC-MAPPING},
-
   year = {2026},
-
   url = {https://github.com/TanshuiDemiG/ONC-MAPPING}
-
 }
-
 ```
 
----
+## License
 
-# License
-
-Please refer to the repository license information for usage details.
+No standalone `LICENSE` file is currently present in this repository. Confirm usage and redistribution terms with the repository owner before external distribution or reuse.
