@@ -1,2 +1,5 @@
 EXE_VER/model/rfdetr_large_onnx/weights.onnx
 *.onnx
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
